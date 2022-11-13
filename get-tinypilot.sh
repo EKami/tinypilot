@@ -100,8 +100,7 @@ trap 'clean_up' EXIT
 #   --directory "${INSTALLER_DIR}"
 
 # Move the release to the bundle location
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
-cp -fR $DIR/release/* $INSTALLER_DIR
+cp -fR $SCRIPT_DIR/release/* $INSTALLER_DIR
 sudo chown root:root --recursive "${INSTALLER_DIR}"
 
 # Remove the TinyPilot Pro Debian package to avoid version conflicts with
