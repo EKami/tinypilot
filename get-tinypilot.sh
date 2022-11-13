@@ -78,26 +78,30 @@ clean_up() {
 trap 'clean_up' EXIT
 
 # Download tarball to temporary file.
-HTTP_CODE="$(curl https://gk.tinypilotkvm.com/community/download/latest \
-  --location \
-  --output "${BUNDLE_FILENAME}" \
-  --write-out '%{http_code}' \
-  --silent)"
-readonly HTTP_CODE
-if [[ "${HTTP_CODE}" != "200" ]]; then
-  echo "Failed to download tarball with HTTP response status code ${HTTP_CODE}." >&2
-  exit 1
-fi
+# HTTP_CODE="$(curl https://gk.tinypilotkvm.com/community/download/latest \
+#   --location \
+#   --output "${BUNDLE_FILENAME}" \
+#   --write-out '%{http_code}' \
+#   --silent)"
+# readonly HTTP_CODE
+# if [[ "${HTTP_CODE}" != "200" ]]; then
+#   echo "Failed to download tarball with HTTP response status code ${HTTP_CODE}." >&2
+#   exit 1
+# fi
 
-# Extract tarball to installer directory. The installer directory and all its
-# content must have root ownership.
-sudo rm -rf "${INSTALLER_DIR}"
-sudo mkdir -p "${INSTALLER_DIR}"
-sudo tar \
-  --gunzip \
-  --extract \
-  --file "${BUNDLE_FILENAME}" \
-  --directory "${INSTALLER_DIR}"
+# # Extract tarball to installer directory. The installer directory and all its
+# # content must have root ownership.
+# sudo rm -rf "${INSTALLER_DIR}"
+# sudo mkdir -p "${INSTALLER_DIR}"
+# sudo tar \
+#   --gunzip \
+#   --extract \
+#   --file "${BUNDLE_FILENAME}" \
+#   --directory "${INSTALLER_DIR}"
+
+# Move the release to the bundle location
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+cp -fR $DIR/release/* $INSTALLER_DIR
 sudo chown root:root --recursive "${INSTALLER_DIR}"
 
 # Remove the TinyPilot Pro Debian package to avoid version conflicts with
