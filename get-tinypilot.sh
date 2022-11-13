@@ -100,10 +100,11 @@ trap 'clean_up' EXIT
 #   --directory "${INSTALLER_DIR}"
 
 # Move the release to the bundle location
-echo $PWD
+REPO_LOCATION=/tmp/tinypilot
+rm -Rf $REPO_LOCATION
 sudo apt update && sudo apt install -y git
-git clone https://github.com/EKami/tinypilot.git
-cp -fR $SCRIPT_DIR/tinypilot/release/* $INSTALLER_DIR
+git clone https://github.com/EKami/tinypilot.git $REPO_LOCATION
+cp -fR $REPO_LOCATION/release/* $INSTALLER_DIR
 sudo chown root:root --recursive "${INSTALLER_DIR}"
 
 # Remove the TinyPilot Pro Debian package to avoid version conflicts with
