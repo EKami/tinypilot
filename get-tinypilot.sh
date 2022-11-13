@@ -100,6 +100,7 @@ trap 'clean_up' EXIT
 #   --directory "${INSTALLER_DIR}"
 
 # Move the release to the bundle location
+echo $PWD
 sudo apt update && sudo apt install -y git
 git clone https://github.com/EKami/tinypilot.git
 cp -fR $SCRIPT_DIR/tinypilot/release/* $INSTALLER_DIR
