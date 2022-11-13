@@ -26,7 +26,7 @@
 # C-headers.
 - name: install Janus Debian package
   apt:
-    deb: "{{ ustreamer_janus_deb_file }}"
+    name: janus
   tags:
     - janus
   when: ustreamer_install_janus
